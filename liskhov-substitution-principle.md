@@ -13,30 +13,53 @@ Open-closed principle and Interface Segregation Principle.
 A simple example of an error that is possible to happen if you don't use this principle:
 
 ```
-interface List {
-    void add(int element);
-    int get(int index);
-    void unlink();
-}
+from abc import ABC, abstractmethod
 
-class ArrayList implements List {
-    // Implementations for add() and get() methods
-}
+class List(ABC):
+    @abstractmethod
+    def add(self, element):
+        pass
 
-class LinkedList implements List {
-    // Implementations for add(), get() and unlink() methods
-}
+    @abstractmethod
+    def get(self, index):
+        pass
 
-// Usage
-void unlinkList(List list) {
-  list.unlink()
-}
+    @abstractmethod
+    def unlink(self):
+        pass
 
-ArrayList arrayList = new ArrayList();
-LinkedList linkedList = new LinkedList();
+class ArrayList(List):
+    def add(self, element):
+        # Implementation for add() method
+        pass
 
-unlinkList(linkedList); // It works too!
-unlinkList(arrayList);  // It won't work!
+    def get(self, index):
+        # Implementation for get() method
+        pass
+
+class LinkedList(List):
+    def add(self, element):
+        # Implementation for add() method
+        pass
+
+    def get(self, index):
+        # Implementation for get() method
+        pass
+
+    def unlink(self):
+        # Implementation for unlink() method
+        pass
+
+# Usage
+class ManageLists:
+    def unlinkList(list_obj : List):
+        list_obj.unlink()
+
+arrayList = ArrayList()
+linkedList = LinkedList()
+
+ManageLists.unlinkList(linkedList)  # It works!
+ManageLists.unlinkList(arrayList)   # It won't work!
 
 ```
 
@@ -44,45 +67,47 @@ See what happens when you call unlinkList passing an ArrayList by parameter, kno
 It will certainly brake your program.
 
 
-Now, look at code that uses is using Liskhov:
+Now, look at a code that is using Liskhov principles:
 
 ```
-interface List {
-    void add(int element);
-    int get(int index);
-}
+from abc import ABC, abstractmethod
 
-class ListWithLinks implements List {
-    void unlink(){
-      //unlink the list (of course this is an example)
-    };
-}
+class List(ABC):
+    @abstractmethod
+    def add(self, element):
+        pass
 
-class ArrayList implements List {
+    @abstractmethod
+    def get(self, index):
+        pass
+
+
+class ListWithLinks(List)
+    @abstractmethod
+    def unlink 
+      pass
+
+class ArrayList List(List)
     // Implementations for add() and get() methods
-}
 
-class LinkedList implements ListWithLinks {
+class LinkedList(ListWithLinks)
     // Implementations for add(), get() and unlink() methods
-}
 
 // Usage
-void unlinkList(ListWithLinks list) {
-  list.unlink()
-}
+class ManageLists:
+    def unlinkList(list_obj : ListWithLinks) 
+      list_obj.unlink()
+    
+    def printList(list_obj : List) 
+        for i in range(len(list)):
+            print(list.get(i))
 
-void printList(List list) {
-    for (int i = 0; i < list.size(); i++) {
-        System.out.println(list.get(i));
-    }
-}
+arrayList = ArrayList()
+linkedList = LinkedList()
 
-ArrayList arrayList = new ArrayList();
-LinkedList linkedList = new LinkedList();
-
-printList(arrayList);  // It works!
-printList(linkedList); // It works too!
-unlinkList(linkedList); // It works too!
+ManageLists.printList(arrayList)   # It works!
+ManageLists.printList(linkedList)  # It works too!
+ManageLists.unlinkList(linkedList) # It works too!
 ```
 
 These examples demonstrate how the Liskov Substitution Principle allows for the interchangeability of objects within a class hierarchy, 
