@@ -89,5 +89,11 @@ Here we don't need to be super smart to notice that every time I have one more A
 Other problem is, if the moto class changes the name of the function, it will surely break the code.
 Also, this code is very coupled, it means that every time I instantiate I will be creating a strong coupling level.
 
+Now let's refactor the code using the Open Closed principle and Strategy pattern:
+
+Firts of all we need to create and Interface, so all the Autos will have to follow the same contract (every class the implements this interface should implement all the functions that come with it, kind of Liskhov substition from another angle).
+
+
+
 
 
