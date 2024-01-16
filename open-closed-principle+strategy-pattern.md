@@ -149,3 +149,7 @@ use Logistics\Interface\IAuto;
   
   }
 ```
+Now all auto classes are following the same contract, and they are not allowed to change the name of the functions and add new functions to the classes, according to the principles we are following.
+So the problem of breaking the code is eliminated.
+
+What about the strategy?
