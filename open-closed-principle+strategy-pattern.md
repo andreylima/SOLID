@@ -4,7 +4,7 @@ Strategy pattern is a part of the design patterns, that regards to more specific
 On this example we will use the strategy pattern to help us learn the Open Closed principle.
 Let's go.
 
-Open closed means that the class you are creating should be opened to be extended but closed to be modificated.
+Open closed means that the class you are creating should be opened to be extended but closed to be modified.
 It means you can't keep comming to change the function, every time your business rules changes.
 
 Strategy pattern is a behavioral design, that lets you select an algorithm at runtime. 
