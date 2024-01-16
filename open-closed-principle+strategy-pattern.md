@@ -206,3 +206,4 @@ use Logistics\auto\Car;
   }
 ```
 
+This structure allows the Index class to calculate fuel consumption for different types of vehicles without being directly dependent on their specific implementations, adhering to the principles of Open/Closed and the Strategy Pattern.
