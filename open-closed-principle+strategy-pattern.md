@@ -5,16 +5,16 @@ On this example we will use the strategy pattern to help us learn the Open Close
 Let's go.
 
 Open closed means that the class you are creating should be opened to be extended but closed to be modified.
-It means you can't keep comming to change the function, every time your business rules changes.
+It means you can't keep changing the function or the class, every time your business rules changes.
 
-Strategy pattern is a behavioral design, that lets you select an algorithm at runtime. 
+Strategy pattern is a behavioral design that lets you select an algorithm at runtime. 
 It allows you to dynamically change the behavior of an object by encapsulating it into different strategies.
 
 Let me explain with examples:
 # Code before OPEN CLOSE and STRATEGY PATTERN
 ```
 <?php 
-namespace Logistics\Consumption;
+namespace Logistics\AutoConsumption;
 use Logistics\auto\Moto;
 use Logistics\auto\Car;
 
@@ -85,13 +85,13 @@ namespace Logistics\auto\Car;
   }
 ```
 
-Here we don't need to be super smart to notice that every time I have one more Auto in my business rules, I will have to change this function.
+Here we don't need to be super smart to notice that every time I have one more Auto category in my business rules, I will have to change this function.
 Other problem is, if the moto class changes the name of the function, it will surely break the code.
-Also, this code is very coupled, it means that every time I instantiate I will be creating a strong coupling level.
+Also, this code is very coupled, it means that every time I instantiate it will be creating a strong coupling level.
 
 Now let's refactor the code using the Open Closed principle and Strategy pattern:
 
-Firts of all we need to create and Interface, so all the Autos will have to follow the same contract.
+Firts of all we need to create an Interface, so all the Autos categories will have to follow the same contract.
 
 ```
 <?php
@@ -104,7 +104,7 @@ interface IAuto
 }
 ```
 
-Every class the implements this interface should implement all the functions that come with it, kind of Liskhov substition from another angle.
+Every class that implements this interface should implement all the functions that come with it, if we are going to follow Liskhov substitution also (from another angle).
 
 Now we should create the auto classes that will implement it.
 
@@ -149,14 +149,14 @@ use Logistics\Interface\IAuto;
   
   }
 ```
-Now all "auto" classes are following the same contract, and they are not allowed to change the name of the functions and add new functions to the classes, according to the principles we are following.
+Now all auto categories classes are following the same contract, and they are not allowed to change the name of the functions and add new functions to the classes, according to the principles we are following.
 So the problem of breaking the code is eliminated.
 
 What about the strategy?
 
 ```
 <?php 
-namespace Logistics\Consumption;
+namespace Logistics\AutoConsumption;
 use Logistics\Interface\IAuto;
 
   class AutoConsumption implements IAuto
@@ -174,6 +174,35 @@ use Logistics\Interface\IAuto;
   
   }
 ```
-Now as we can see, the AutoConsumption class doesn't depend on any external class anymore. It doesn't know nothing about "auto" classes, it just receive an entity of type IAuto, as a dependency injection.
+As we can see, the AutoConsumption class doesn't depend on any external class anymore. It doesn't know nothing about "auto" classes, it just receive an entity of type IAuto, as a dependency injection.
 Now this class is totally decoupled, doesn't matter how many new "auto" categories we need to create.
-Now you won't need to change this class to add new categories, it is OPENED TO BE EXTENDED BUT CLOSED TO DE MODIFIED.
+You won't need to change this class to add new categories, it is OPENED TO BE EXTENDED BUT CLOSED TO DE MODIFIED.
+
+And how it is going to select the algorithm at runtime?
+```
+<?php 
+use Logistics\AutoConsumption;
+namespace Logistics\auto\Moto;
+namespace Logistics\auto\Car;
+
+  class Index implements AutoConsumption
+  {
+      protected AutoConsumption $motoConsumption;
+      protected AutoConsumption $carConsumption;
+  
+      public function CalculateMotoConsumption(int $kmdistance)
+      {
+          return $this->motoConsumption = new AutoConsumption(
+            new Moto()
+          )
+      }
+
+        public function CalculateCarConsumption(int $kmdistance)
+      {
+          return $this->motoConsumption = new AutoConsumption(
+            new Car()
+          )
+      }
+  }
+```
+
