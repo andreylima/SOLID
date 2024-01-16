@@ -180,29 +180,29 @@ You won't need to change this class to add new categories, it is OPENED TO BE EX
 
 And how it is going to select the algorithm at runtime?
 ```
-<?php 
-use Logistics\AutoConsumption;
-namespace Logistics\auto\Moto;
-namespace Logistics\auto\Car;
+<?php
+namespace Logistics;
 
-  class Index implements AutoConsumption
+use Logistics\AutoConsumption;
+use Logistics\auto\Moto;
+use Logistics\auto\Car;
+
+  class Index
   {
       protected AutoConsumption $motoConsumption;
       protected AutoConsumption $carConsumption;
   
-      public function CalculateMotoConsumption(int $kmdistance)
-      {
-          return $this->motoConsumption = new AutoConsumption(
-            new Moto()
-          )
-      }
+    public function CalculateMotoConsumption(int $kmdistance)
+    {
+        $motoConsumption = new AutoConsumption(new Moto());
+        return $motoConsumption->CalculateConsumption($kmdistance);
+    }
 
-        public function CalculateCarConsumption(int $kmdistance)
-      {
-          return $this->motoConsumption = new AutoConsumption(
-            new Car()
-          )
-      }
+    public function CalculateCarConsumption(int $kmdistance)
+    {
+        $carConsumption = new AutoConsumption(new Car());
+        return $carConsumption->CalculateConsumption($kmdistance);
+    }
   }
 ```
 
