@@ -91,9 +91,61 @@ Also, this code is very coupled, it means that every time I instantiate I will b
 
 Now let's refactor the code using the Open Closed principle and Strategy pattern:
 
-Firts of all we need to create and Interface, so all the Autos will have to follow the same contract (every class the implements this interface should implement all the functions that come with it, kind of Liskhov substition from another angle).
+Firts of all we need to create and Interface, so all the Autos will have to follow the same contract.
 
+```
+<?php
 
+namespace Logistics\Interface\IAuto;
 
+interface IAuto
+{
+    public function CalculateConsumption(int $kmdistance): int;
+}
+```
 
+Every class the implements this interface should implement all the functions that come with it, kind of Liskhov substition from another angle.
 
+Now we should create the auto classes that will implement it.
+
+```
+<?php 
+namespace Logistics\auto\Moto;
+use Logistics\Interface\IAuto;
+
+  class Moto implements IAuto
+  {
+      public function __construct(
+          protected string $kmconsumption,
+      ) {
+          $this->kmconsumption = 20;
+      }
+  
+      public function CalculateConsumption(int $kmdistance)
+      {
+          return $this->kmconsumption *  $kmdistance;
+      }
+  
+  }
+```
+
+```
+<?php 
+namespace Logistics\auto\Car;
+use Logistics\Interface\IAuto;
+
+  class Car implements IAuto
+  {
+      public function __construct(
+          protected string $kmconsumption,
+      ) {
+          $this->kmconsumption = 8;
+      }
+  
+      public function CalculateConsumption(int $kmdistance)
+      {
+          return $this->kmconsumption *  $kmdistance;
+      }
+  
+  }
+```
