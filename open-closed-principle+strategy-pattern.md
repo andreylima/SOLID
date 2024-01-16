@@ -149,7 +149,31 @@ use Logistics\Interface\IAuto;
   
   }
 ```
-Now all auto classes are following the same contract, and they are not allowed to change the name of the functions and add new functions to the classes, according to the principles we are following.
+Now all "auto" classes are following the same contract, and they are not allowed to change the name of the functions and add new functions to the classes, according to the principles we are following.
 So the problem of breaking the code is eliminated.
 
 What about the strategy?
+
+```
+<?php 
+namespace Logistics\Consumption;
+use Logistics\Interface\IAuto;
+
+  class AutoConsumption implements IAuto
+  {
+      public function __construct(
+          protected IAuto $auto,
+      ) {
+
+      }
+  
+      public function CalculateConsumption(int $kmdistance)
+      {
+          return $this->auto->CalculateConsumption($kmdistance)
+      }
+  
+  }
+```
+Now as we can see, the AutoConsumption class doesn't depend on any external class anymore. It doesn't know nothing about "auto" classes, it just receive an entity of type IAuto, as a dependency injection.
+Now this class is totally decoupled, doesn't matter how many new "auto" categories we need to create.
+Now you won't need to change this class to add new categories, it is OPENED TO BE EXTENDED BUT CLOSED TO DE MODIFIED.
